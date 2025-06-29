@@ -10,15 +10,17 @@ datasource db {
 }
 
 model User {
+  @@schema("portfolio")
+
   id        Int      @id @default(autoincrement())
   username  String   @unique
   password  String
   createdAt DateTime @default(now())
-
-  @@schema("portfolio")
 }
 
 model Project {
+  @@schema("portfolio")
+
   id          Int      @id @default(autoincrement())
   title       String
   slug        String   @unique
@@ -32,11 +34,11 @@ model Project {
   createdAt   DateTime @default(now())
 
   views ViewLog[] @relation("ProjectViews")
-
-  @@schema("portfolio")
 }
 
 model ViewLog {
+  @@schema("portfolio")
+
   id          Int      @id @default(autoincrement())
   projectSlug String
   deviceId    String
@@ -45,7 +47,5 @@ model ViewLog {
   createdAt   DateTime @default(now())
 
   project Project @relation("ProjectViews", fields: [projectSlug], references: [slug])
-
   @@index([projectSlug, deviceId, createdAt])
-  @@schema("portfolio")
 }
